@@ -9,5 +9,5 @@ steps:
            "--platform", "managed",
            "--region", "asia-south1",
            "--allow-unauthenticated",
-           "--port", "3001"]
+           "--port", "8080"]
 

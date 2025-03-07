@@ -10,7 +10,7 @@ import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const app = express();
-const PORT = parseInt(process.env.PORT || '3001', 10);
+const PORT = parseInt(process.env.PORT || '8080', 10);
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const allowedOrigins = [
