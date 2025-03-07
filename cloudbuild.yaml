@@ -1,0 +1,13 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/calculator-453018/calculus-backend", "."]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/calculator-453018/calculus-backend"]
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    args: ["gcloud", "run", "deploy", "calculus-backend",
+           "--image", "gcr.io/calculator-453018/calculus-backend",
+           "--platform", "managed",
+           "--region", "asia-south1",
+           "--allow-unauthenticated",
+           "--port", "3001"]
+
