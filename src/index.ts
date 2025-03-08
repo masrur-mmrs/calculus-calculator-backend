@@ -21,13 +21,15 @@ const allowedOrigins = [
 console.log(`Environment: ${NODE_ENV}`);
 console.log(`Allowed origins: ${allowedOrigins}`);
 
+app.set('trust proxy', 1);
+
 app.use(helmet());
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
 });
 app.use(limiter);
 
@@ -43,7 +45,7 @@ const corsOptions: cors.CorsOptions = {
   },
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  // credentials: true,
+  credentials: true,
   maxAge: 86400,
 };
 
