@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y python3 python3-pip
 # Install Python dependencies
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Expose port 3001 (or whatever port your Express server uses)
+# Expose port 8080 (or whatever port your Express server uses)
 EXPOSE 8080
 
 # Start the server
