@@ -43,7 +43,7 @@ const corsOptions: cors.CorsOptions = {
   },
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
+  // credentials: true,
   maxAge: 86400,
 };
 
