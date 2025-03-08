@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import path from 'path';
 
 dotenv.config({ path: path.resolve(__dirname, '.env') });
+// console.log('Loaded .env, FRONTEND_URL =', process.env.FRONTEND_URL);
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '8080', 10);
