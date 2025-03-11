@@ -1,30 +1,22 @@
-import { Router } from "express";
-import { spawn } from "child_process";
+import { Router, Request, Response } from "express";
+import { pythonDifferentiationService } from "../services/python-differentiation-service";
 
 const router = Router();
 
-router.post("/", (req, res) => {
+router.post("/", async (req: Request, res: Response): Promise<void> => {
+  try {
     const { expression, variable } = req.body;
-    const pythonProcess = spawn("python3", ["./scripts/differentiation.py", expression.toString(), variable]);
-    let result: string = "";
-    let errorOccurred = false;
-
-    pythonProcess.stdout.on("data", (data: Buffer) => {
-        result += data.toString();
-    });
-
-    pythonProcess.stdout.on("close", (code: number) => {
-        if (!errorOccurred) {
-            res.json({ result });
-            console.log("Process closed with code: ", code);
-        }
-    });
-
-    pythonProcess.stderr.on("data", (data: Buffer) => {
-        errorOccurred = true;
-        console.log("Error: ", data.toString());
-        res.status(500).send(data.toString());
-    });
+    
+    if (!expression || !variable) {
+        res.status(400).json({ error: "Missing required parameters" });
+    }
+    
+    const result = await pythonDifferentiationService.differentiate(expression, variable);
+    res.json({ result });
+  } catch (error) {
+    console.error("Differentiation error:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
 });
 
 export default router;
