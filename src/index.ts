@@ -66,7 +66,12 @@ if (NODE_ENV === 'production') {
 app.use("/derivative", derivative);
 app.use("/integral", integral);
 
-const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+const errorHandler: ErrorRequestHandler = (
+  err: Error, 
+  _req: Request, 
+  res: Response, 
+  _next: NextFunction
+) => {
   console.error(err.stack);
   res.status(500).json({ 
     error: 'Server error', 

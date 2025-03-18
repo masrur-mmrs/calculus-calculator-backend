@@ -1,25 +1,25 @@
 {
     "compilerOptions": {
-      "target": "ES2022",                  // Modern JavaScript features
-      "module": "CommonJS",                 // Use CommonJS for Node.js
-      "rootDir": "src",                     // Source directory
-      "outDir": "dist",                     // Output directory for compiled files
-      "strict": true,                        // Enable strict type-checking
-      "esModuleInterop": true,               // Allow default imports from CommonJS
-      "forceConsistentCasingInFileNames": true, // Enforce consistent casing
-      "skipLibCheck": true,                  // Skip checking declaration files
-      "resolveJsonModule": true,             // Allow importing JSON files
-      "noImplicitAny": true,                 // Prevent implicit `any` types
-      "strictNullChecks": true,              // Enable null safety
-      "strictPropertyInitialization": true,  // Ensure properties are initialized
-      "moduleResolution": "Node",            // Resolve modules in Node.js style
-      "allowSyntheticDefaultImports": true,  // Support default imports
-      "noUnusedLocals": true,                // Warn on unused local variables
-      "noUnusedParameters": true,            // Warn on unused parameters
-      "noFallthroughCasesInSwitch": true,    // Prevent fallthrough in switch statements
-      "noImplicitReturns": true              // Ensure all code paths return values
+      "target": "ES2022",
+      "module": "CommonJS",
+      "rootDir": "src",
+      "outDir": "dist",
+      "strict": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "skipLibCheck": true,
+      "resolveJsonModule": true,
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitReturns": true
     },
-    "include": ["src"],                      // Include all TypeScript files in src
-    "exclude": ["node_modules", "dist"]      // Exclude build artifacts
+    "include": ["src"],
+    "exclude": ["node_modules", "dist"]
   }
   
