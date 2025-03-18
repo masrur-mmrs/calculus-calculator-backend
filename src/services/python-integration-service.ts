@@ -82,5 +82,4 @@ class PythonIntegrationService {
   }
 }
 
-// Singleton service
 export const pythonIntegrationService = new PythonIntegrationService();

@@ -82,5 +82,4 @@ class PythonDifferentiationService {
   }
 }
 
-// Singleton service
 export const pythonDifferentiationService = new PythonDifferentiationService();

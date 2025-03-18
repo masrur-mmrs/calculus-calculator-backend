@@ -1,0 +1,6 @@
+#dependencies
+/node_modules
+/scripts/venv
+
+#env files
+/src/.env
