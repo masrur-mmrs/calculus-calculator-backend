@@ -1,15 +1,13 @@
 import sys
 import sympy as sp
 import json
-from sympy.parsing.latex import parse_latex
-from latex2sympy2 import latex2sympy, latex2latex
+from latex2sympy2 import latex2sympy
 
 def differentiate(expr, var):
-    x = sp.symbols(var)
+    x = sp.symbols(var.replace("\\", ""))
     if isinstance(expr, str):
         expr = latex2sympy(expr)
-    f = expr
-    df = sp.diff(f, x)
+    df = sp.diff(expr, x)
     return sp.latex(df)
 
 if __name__ == '__main__':
