@@ -15,7 +15,8 @@ const PORT = parseInt(process.env.PORT || '8080', 10);
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const allowedOrigins = [
-  process.env.FRONTEND_URL || "http://192.168.1.106:3000", 
+  process.env.FRONTEND_URL,
+  "http://192.168.68.104:3000", 
   "http://localhost:3000"
 ];
 

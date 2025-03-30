@@ -4,6 +4,7 @@ import { createInterface, Interface } from 'readline';
 interface QueueItem {
   expression: string;
   variable: string;
+  orderOfDerivative: string;
   resolve: (value: string) => void;
   reject: (reason: Error) => void;
 }
@@ -67,16 +68,16 @@ class PythonDifferentiationService {
   private processNextRequest(): void {
     if (this.requestQueue.length > 0 && !this.isProcessing) {
       this.isProcessing = true;
-      const { expression, variable } = this.requestQueue[0];
-      this.process.stdin?.write(JSON.stringify({ expression, variable }) + '\n');
+      const { expression, variable, orderOfDerivative } = this.requestQueue[0];
+      this.process.stdin?.write(JSON.stringify({ expression, variable, orderOfDerivative }) + '\n');
     } else {
       this.isProcessing = false;
     }
   }
 
-  public differentiate(expression: string, variable: string): Promise<string> {
+  public differentiate(expression: string, variable: string, orderOfDerivative: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.requestQueue.push({ expression, variable, resolve, reject });
+      this.requestQueue.push({ expression, variable, orderOfDerivative, resolve, reject });
       this.processNextRequest();
     });
   }

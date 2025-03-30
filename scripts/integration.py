@@ -7,8 +7,9 @@ def integrate(expr, var):
     x = sp.Symbol(var.replace('\\', ''))
     if isinstance(expr, str):
         expr = latex2sympy(expr)
-    result = sp.integrate(expr, x)
-    return sp.latex(result)
+    it = sp.integrate(expr, x)
+    it = sp.simplify(it)
+    return sp.latex(it)
 
 if __name__ == '__main__':
     for line in sys.stdin:
