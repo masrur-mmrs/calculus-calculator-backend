@@ -5,13 +5,13 @@ const router = Router();
 
 router.post("/", async (req: Request, res: Response): Promise<void> => {
   try {
-    const { expression, variable } = req.body;
+    const { expression, variable, bound } = req.body;
     
-    if (!expression || !variable) {
+    if (!expression || !variable || !bound) {
       res.status(400).json({ error: "Missing required parameters" });
     }
     
-    const result = await pythonIntegrationService.integrate(expression, variable);
+    const result = await pythonIntegrationService.integrate(expression, variable, bound);
     res.json({ result });
   } catch (error) {
     console.error("Integration error:", error);

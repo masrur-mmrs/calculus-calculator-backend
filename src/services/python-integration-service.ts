@@ -4,6 +4,7 @@ import { createInterface, Interface } from 'readline';
 interface QueueItem {
   expression: string;
   variable: string;
+  bound: object;
   resolve: (value: string) => void;
   reject: (reason: Error) => void;
 }
@@ -11,6 +12,11 @@ interface QueueItem {
 interface PythonResponse {
   result?: string;
   error?: string;
+}
+
+interface Bound {
+  upperBound: string;
+  lowerBound: string;
 }
 
 class PythonIntegrationService {
@@ -67,16 +73,16 @@ class PythonIntegrationService {
   private processNextRequest(): void {
     if (this.requestQueue.length > 0 && !this.isProcessing) {
       this.isProcessing = true;
-      const { expression, variable } = this.requestQueue[0];
-      this.process.stdin?.write(JSON.stringify({ expression, variable }) + '\n');
+      const { expression, variable, bound } = this.requestQueue[0];
+      this.process.stdin?.write(JSON.stringify({ expression, variable, bound }) + '\n');
     } else {
       this.isProcessing = false;
     }
   }
 
-  public integrate(expression: string, variable: string): Promise<string> {
+  public integrate(expression: string, variable: string, bound: Bound): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.requestQueue.push({ expression, variable, resolve, reject });
+      this.requestQueue.push({ expression, variable, bound, resolve, reject });
       this.processNextRequest();
     });
   }
