@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import derivative from './routes/derivative';
 import integral from './routes/integral';
+import basic from './routes/basic';
 import dotenv from "dotenv";
 import path from 'path';
 
@@ -16,7 +17,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  "http://192.168.68.104:3000", 
+  "http://192.168.1.105:3000", 
   "http://localhost:3000"
 ];
 
@@ -66,6 +67,7 @@ if (NODE_ENV === 'production') {
 
 app.use("/derivative", derivative);
 app.use("/integral", integral);
+app.use("/basic", basic);
 
 const errorHandler: ErrorRequestHandler = (
   err: Error, 
