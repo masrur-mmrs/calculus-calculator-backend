@@ -17,7 +17,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  "http://192.168.1.105:3000", 
+  "http://192.168.1.107:3000", 
   "http://localhost:3000"
 ];
 
