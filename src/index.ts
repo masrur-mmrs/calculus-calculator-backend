@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import derivative from './routes/derivative';
 import integral from './routes/integral';
 import basic from './routes/basic';
+import derivativeSteps from './routes/derivative-steps';
 import dotenv from "dotenv";
 import path from 'path';
 
@@ -65,6 +66,7 @@ if (NODE_ENV === 'production') {
   });
 }
 
+app.use("/derivative-steps", derivativeSteps);
 app.use("/derivative", derivative);
 app.use("/integral", integral);
 app.use("/basic", basic);

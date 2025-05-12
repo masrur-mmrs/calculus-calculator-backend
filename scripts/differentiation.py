@@ -3,11 +3,11 @@ import sympy as sp
 import json
 from latex2sympy2 import latex2sympy
 
-def differentiate(expr, var, ood):
-    x = sp.symbols(var.replace("\\", ""))
+def differentiate(expr, variable, ood = 1):
+    var = sp.symbols(variable.replace("\\", ""))
     if isinstance(expr, str):
         expr = latex2sympy(expr)
-    df = sp.diff(expr, x, ood)
+    df = sp.diff(expr, var, ood)
     df = sp.simplify(df)
     return sp.latex(df)
 

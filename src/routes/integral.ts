@@ -9,6 +9,7 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
     
     if (!expression || !variable || !bound) {
       res.status(400).json({ error: "Missing required parameters" });
+      return;
     }
     
     const result = await pythonIntegrationService.integrate(expression, variable, bound);
