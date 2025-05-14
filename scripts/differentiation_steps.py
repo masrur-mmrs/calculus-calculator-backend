@@ -112,7 +112,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"Computing the derivative directly:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({format_latex_expr(expr)}) = {format_latex_expr(derivative)}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{format_latex_expr(expr)}] = {format_latex_expr(derivative)}"
         })
         return steps
     expr_type = classify_differentiation(expr)
@@ -120,7 +120,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
     steps.append({
         "number": step_number,
         "text": f"To find the derivative of ${expr_latex}$, we need to identify what rule to use.",
-        "math": f"\\frac{{d}}{{d{str(var)}}}({expr_latex})"
+        "math": f"\\frac{{d}}{{d{str(var)}}}[{expr_latex}"
     })
     step_number += 1
     if expr_type == "power_1" and expr == x:
@@ -135,7 +135,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"This is a constant with respect to ${var}$, so the derivative is 0.",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({const_latex}) = 0"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{const_latex}] = 0"
         })
         return steps
     if expr_type == "quotient":
@@ -145,7 +145,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"This is a quotient of the form $\\frac{{f(x)}}{{g(x)}}$, so we'll use the quotient rule: $\\frac{{d}}{{dx}}[\\frac{{f(x)}}{{g(x)}}] = \\frac{{g(x) \\cdot f'(x) - f(x) \\cdot g'(x)}}{{g(x)^{{2}}}}$",
-            "math": f"\\frac{{d}}{{d{str(var)}}}\\left(\\frac{{{u_latex}}}{{{v_latex}}}\\right) = \\frac{{{v_latex} \\cdot \\frac{{d}}{{dx}}({u_latex}) - {u_latex} \\cdot \\frac{{d}}{{dx}}({v_latex})}}{{({v_latex})^2}}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}\\left[\\frac{{{u_latex}}}{{{v_latex}}}\\right] = \\frac{{{v_latex} \\cdot \\frac{{d}}{{dx}}({u_latex}) - {u_latex} \\cdot \\frac{{d}}{{dx}}({v_latex})}}{{({v_latex})^2}}"
         })
         step_number += 1
         f_prime = calculate_derivative(u, var)
@@ -156,7 +156,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": "Let's find the derivative of the numerator:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex})"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex}]"
             })
             step_number += 1
             numerator_steps = generate_steps(u, var, current_depth + 1, max_depth)
@@ -165,13 +165,13 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
                 steps.append({
                     "number": step_number,
                     "text": f"The derivative of the numerator is:",
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex}) = {f_prime_latex}"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex}] = {f_prime_latex}"
                 })
                 step_number += 1
             steps.append({
                 "number": step_number,
                 "text": "Now let's find the derivative of the denominator:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({v_latex})"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{v_latex}]"
             })
             step_number += 1
             denominator_steps = generate_steps(v, var, current_depth + 1, max_depth)
@@ -180,20 +180,20 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
                 steps.append({
                     "number": step_number,
                     "text": f"The derivative of the denominator is:",
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({v_latex}) = {g_prime_latex}"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{v_latex}] = {g_prime_latex}"
                 })
                 step_number += 1
         else:
             steps.append({
                 "number": step_number,
                 "text": f"The derivatives of the numerator and denominator are:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex}) = {f_prime_latex}, \\quad \\frac{{d}}{{d{str(var)}}}({v_latex}) = {g_prime_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex}] = {f_prime_latex}, \\quad \\frac{{d}}{{d{str(var)}}}[{v_latex}] = {g_prime_latex}"
             })
             step_number += 1
         steps.append({
             "number": step_number,
             "text": "Now substitute these derivatives into the quotient rule formula $\\frac{{d}}{{dx}}[\\frac{{f(x)}}{{g(x)}}] = \\frac{{g(x) \\cdot f'(x) - f(x) \\cdot g'(x)}}{{g(x)^{{2}}}}$:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}\\left(\\frac{{{u_latex}}}{{{v_latex}}}\\right) = \\frac{{{v_latex} \\cdot ({f_prime_latex}) - {u_latex} \\cdot ({g_prime_latex})}}{{({v_latex})^2}}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}\\left[\\frac{{{u_latex}}}{{{v_latex}}}\\right] = \\frac{{{v_latex} \\cdot ({f_prime_latex}) - {u_latex} \\cdot ({g_prime_latex})}}{{({v_latex})^2}}"
         })
         step_number += 1
         final_derivative = calculate_derivative(expr, var)
@@ -201,7 +201,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": "The final derivative is:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}\\left(\\frac{{{u_latex}}}{{{v_latex}}}\\right) = {final_derivative_latex}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}\\left[\\frac{{{u_latex}}}{{{v_latex}}}\\right] = {final_derivative_latex}"
         })
     elif expr_type == "product":
         u, v = product_extract_u_v(expr)
@@ -210,7 +210,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"This is a product of the form $f(x) \\cdot g(x)$, so we'll use the product rule: $\\frac{{d}}{{dx}}[f(x) \\cdot g(x)] = f(x) \\cdot g'(x) + g(x) \\cdot f'(x)$",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex} \\cdot {v_latex}) = {u_latex} \\cdot \\frac{{d}}{{d{str(var)}}}({v_latex}) + {v_latex} \\cdot \\frac{{d}}{{d{str(var)}}}({u_latex})"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex} \\cdot {v_latex}] = {u_latex} \\cdot \\frac{{d}}{{d{str(var)}}}[{v_latex}] + {v_latex} \\cdot \\frac{{d}}{{d{str(var)}}}[{u_latex}]"
         })
         step_number += 1
         f_prime = calculate_derivative(u, var)
@@ -221,40 +221,40 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": "Let's find the derivative of the first factor:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex})"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex}]"
             })
             step_number += 1
             first_factor_steps = generate_steps(u, var, current_depth + 1, max_depth)
             steps.append({
                 "number": step_number,
                 "text": f"The derivative of the first factor is:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex}) = {f_prime_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex}] = {f_prime_latex}"
             })
             step_number += 1
             steps.append({
                 "number": step_number,
                 "text": "Now let's find the derivative of the second factor:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({v_latex})"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{v_latex}]"
             })
             step_number += 1
             second_factor_steps = generate_steps(v, var, current_depth + 1, max_depth)
             steps.append({
                 "number": step_number,
                 "text": f"The derivative of the second factor is:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({v_latex}) = {g_prime_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{v_latex}] = {g_prime_latex}"
             })
             step_number += 1
         else:
             steps.append({
                 "number": step_number,
                 "text": f"The derivatives of the factors are:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex}) = {f_prime_latex}, \\quad \\frac{{d}}{{d{str(var)}}}({v_latex}) = {g_prime_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex}] = {f_prime_latex}, \\quad \\frac{{d}}{{d{str(var)}}}[{v_latex}] = {g_prime_latex}"
             })
             step_number += 1
         steps.append({
             "number": step_number,
             "text": "Now substitute these derivatives into the product rule formula:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex} \\cdot {v_latex}) = {u_latex} \\cdot ({g_prime_latex}) + {v_latex} \\cdot ({f_prime_latex})"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex} \\cdot {v_latex}] = {u_latex} \\cdot ({g_prime_latex}) + {v_latex} \\cdot ({f_prime_latex})"
         })
         step_number += 1
         final_derivative = calculate_derivative(expr, var)
@@ -262,7 +262,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": "The final derivative is:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex} \\cdot {v_latex}) = {final_derivative_latex}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex} \\cdot {v_latex}] = {final_derivative_latex}"
         })
     elif expr_type in ["sum", "difference"]:
         u, v = sumdiff_extract_u_v(expr)
@@ -273,7 +273,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"This is a ${rule_name}$ of the form $f(x) {operation} g(x)$, so we'll use the ${rule_name}$ rule: $\\frac{{d}}{{dx}}[f(x) {operation} g(x)] = f'(x) {operation} g'(x)$",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex} {operation} {v_latex}) = \\frac{{d}}{{d{str(var)}}}({u_latex}) {operation} \\frac{{d}}{{d{str(var)}}}({v_latex})"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex} {operation} {v_latex}] = \\frac{{d}}{{d{str(var)}}}[{u_latex}] {operation} \\frac{{d}}{{d{str(var)}}}[{v_latex}]"
         })
         step_number += 1
         f_prime = calculate_derivative(u, var)
@@ -284,7 +284,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": "Let's differentiate the first part:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex})"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex}]"
             })
             step_number += 1
             u_steps = generate_steps(u, var, current_depth + 1, max_depth)
@@ -293,13 +293,13 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
                 steps.append({
                     "number": step_number,
                     "text": f"The derivative of the first part is:",
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex}) = {f_prime_latex}"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex}] = {f_prime_latex}"
                 })
                 step_number += 1
             steps.append({
                 "number": step_number,
                 "text": "Now differentiate the second part:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({v_latex})"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{v_latex}]"
             })
             step_number += 1
             v_steps = generate_steps(v, var, current_depth + 1, max_depth)
@@ -308,20 +308,20 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
                 steps.append({
                     "number": step_number,
                     "text": f"The derivative of the second part is:",
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({v_latex}) = {g_prime_latex}"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{v_latex}] = {g_prime_latex}"
                 })
                 step_number += 1
         else:
             steps.append({
                 "number": step_number,
                 "text": f"The derivatives of the parts are:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex}) = {f_prime_latex}, \\quad \\frac{{d}}{{d{str(var)}}}({v_latex}) = {g_prime_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex}] = {f_prime_latex}, \\quad \\frac{{d}}{{d{str(var)}}}[{v_latex}] = {g_prime_latex}"
             })
             step_number += 1
         steps.append({
             "number": step_number,
             "text": "Now substitute these into the rule:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex} {operation} {v_latex}) = {f_prime_latex} {operation} {g_prime_latex}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex} {operation} {v_latex}] = {f_prime_latex} {operation} {g_prime_latex}"
         })
         step_number += 1
         final_derivative = calculate_derivative(expr, var)
@@ -329,7 +329,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": "The final derivative is:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({u_latex} {operation} {v_latex}) = {final_derivative_latex}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{u_latex} {operation} {v_latex}] = {final_derivative_latex}"
         })
     elif expr_type == "chain":
         outer, inner = chain_extract_u_v(expr)
@@ -342,7 +342,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": f"This is a composite function of the form $g(x)^{exponent}$, so we'll use the chain rule with power rule $\\frac{{d}}{{dx}}[(f(x))^{{n}}] = n(f(x))^{{n-1}} \\cdot f'(x)$:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}[({base_latex})^{{{exponent}}}] = {exponent} \\cdot ({base_latex})^{{{exponent-1}}} \\cdot \\frac{{d}}{{d{str(var)}}}({base_latex})"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[({base_latex})^{{{exponent}}}] = {exponent} \\cdot ({base_latex})^{{{exponent-1}}} \\cdot \\frac{{d}}{{d{str(var)}}}[{base_latex}]"
             })
             step_number += 1
             g_prime = calculate_derivative(base, var)
@@ -351,21 +351,21 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
                 steps.append({
                     "number": step_number,
                     "text": "Let's find the derivative of the inner function:",
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({base_latex})"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{base_latex}]"
                 })
                 step_number += 1
                 inner_steps = generate_steps(base, var, current_depth + 1, max_depth)
                 steps.append({
                     "number": step_number,
                     "text": f"The derivative of the inner function is:",
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({base_latex}) = {g_prime_latex}"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{base_latex}] = {g_prime_latex}"
                 })
                 step_number += 1
             else:
                 steps.append({
                     "number": step_number,
                     "text": f"The derivative of the inner function is:",
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({base_latex}) = {g_prime_latex}"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{base_latex}] = {g_prime_latex}"
                 })
                 step_number += 1
             steps.append({
@@ -386,7 +386,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": f"This is a composite function of the form ${function_name}(g(x))$, so we'll use the chain rule $\\frac{{d}}{{dx}}[f(g(x))] = f'(g(x)) \\cdot g'(x)$:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}\\left({outer_latex}\\right) = f'\\left({inner_latex}\\right) \\cdot \\frac{{d}}{{d{str(var)}}}\\left({inner_latex}\\right)"
+                "math": f"\\frac{{d}}{{d{str(var)}}}\\left[{outer_latex}\\right] = f'\\left({inner_latex}\\right) \\cdot \\frac{{d}}{{d{str(var)}}}\\left[{outer_latex}\\right]"
             })
             step_number += 1
             
@@ -439,21 +439,21 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
                     "text": f"The derivative of $\\ln(u)$ is $\\frac{{1}}{{u}}$:",
                     "math": f"f'\\left({inner_latex}\\right) = {outer_derivative}"
                 })
-            elif function_name == "arctan":
+            elif function_name == "atan":
                 outer_derivative = f"\\frac{{1}}{{1+{inner_latex}^{{2}}}}"
                 steps.append({
                     "number": step_number,
                     "text": f"The derivative of $\\operatorname{{atan}}(u)$ is $\\frac{{1}}{{1+u^{{2}}}}$:",
                     "math": f"f'\\left({inner_latex}\\right) = {outer_derivative}"
                 })
-            elif function_name == "arcsin":
+            elif function_name == "asin":
                 outer_derivative = f"\\frac{{1}}{{\\sqrt{{1-{inner_latex}^2}}}}"
                 steps.append({
                     "number": step_number,
                     "text": f"The derivative of $\\operatorname{{asin}}(u)$ is $\\frac{{1}}{{\\sqrt{{1-u^{{2}}}}}}$:",
                     "math": f"f'\\left({inner_latex}\\right) = {outer_derivative}"
                 })
-            elif function_name == "arccos":
+            elif function_name == "acos":
                 outer_derivative = f"-\\frac{{1}}{{\\sqrt{{1-{inner_latex}^2}}}}"
                 steps.append({
                     "number": step_number,
@@ -474,7 +474,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": f"The derivative of the inner function is:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}\\left({inner_latex}\\right) = {inner_derivative_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}\\left[{inner_latex}\\right] = {inner_derivative_latex}"
             })
             step_number += 1
             
@@ -483,7 +483,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": "The final derivative by the chain rule is:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}\\left({outer_latex}\\right) = {final_derivative_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}\\left[{outer_latex}\\right] = {final_derivative_latex}"
             })
         else:
             final_derivative = calculate_derivative(expr, var)
@@ -491,7 +491,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": f"This is a composite function, so we apply the chain rule: $\\frac{{d}}{{dx}}[f(g(x))] = f'(g(x)) \\cdot g'(x)$:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({expr_latex}) = {final_derivative_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{expr_latex}] = {final_derivative_latex}"
             })
     elif expr_type == "power":
         if isinstance(expr, sp.Pow):
@@ -502,7 +502,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
                 steps.append({
                     "number": step_number,
                     "text": f"This is a power function of the form ${str(var)}^{exponent}$, so we'll use the power rule $\\frac{{d}}{{dx}}[x^{{n}}] = n \\cdot x^{{(n-1)}}$:",
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({base_latex}^{{{exponent}}}) = {exponent} \\cdot {base_latex}^{{{exponent-1}}}"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{base_latex}^{{{exponent}}}] = {exponent} \\cdot {base_latex}^{{{exponent-1}}}"
                 })
                 step_number += 1
                 final_derivative = calculate_derivative(expr, var)
@@ -510,7 +510,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
                 steps.append({
                     "number": step_number, 
                     "text": "The final derivative is:", 
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({base_latex}^{{{exponent}}}) = {final_derivative_latex}"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{base_latex}^{{{exponent}}}] = {final_derivative_latex}"
                 })
             else:
                 final_derivative = calculate_derivative(expr, var)
@@ -518,7 +518,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
                 steps.append({
                     "number": step_number,
                     "text": f"For this power expression with a non-${str(var)}$ base, we need a combination of power rule and chain rule:",
-                    "math": f"\\frac{{d}}{{d{str(var)}}}({expr_latex}) = {final_derivative_latex}"
+                    "math": f"\\frac{{d}}{{d{str(var)}}}[{expr_latex}] = {final_derivative_latex}"
                 })
     elif expr_type in ["sin", "cos", "tan", "csc", "sec", "cot"]:
         outer, inner = chain_extract_u_v(expr)
@@ -540,7 +540,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"This is a trigonometric function ${outer.func.__name__}({str(var)})$. Its derivative follows standard rules ${rule}$:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}\\left({outer_latex}\\right) = \\text{{derivative of}}\\ {outer.func.__name__}({str(var)})\\ \\times\\ \\frac{{d}}{{d{str(var)}}}({inner_latex})"
+            "math": f"\\frac{{d}}{{d{str(var)}}}\\left[{outer_latex}\\right] = \\text{{derivative of}}\\ {outer.func.__name__}({str(var)})\\ \\times\\ \\frac{{d}}{{d{str(var)}}}[{inner_latex}]"
         })
         step_number += 1
         outer_derivatives = {
@@ -555,7 +555,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"The derivative of ${outer.func.__name__}({str(var)})$ is ${outer_derivative_text}$.",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({outer_latex}) = {outer_derivative_text}({inner_latex}) \\times \\frac{{d}}{{d{str(var)}}}({inner_latex})"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{outer_latex}] = {outer_derivative_text}({inner_latex}) \\times \\frac{{d}}{{d{str(var)}}}[{inner_latex}]"
         })
         step_number += 1
         inner_derivative = calculate_derivative(inner, var)
@@ -565,14 +565,14 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": "Now, find the derivative of the inside function:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({inner_latex}) = {inner_derivative_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{inner_latex}] = {inner_derivative_latex}"
             })
             step_number += 1
         else:
             steps.append({
                 "number": step_number,
                 "text": f"The derivative of the inside is:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({inner_latex}) = {inner_derivative_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{inner_latex}] = {inner_derivative_latex}"
             })
             step_number += 1
         final_derivative = calculate_derivative(expr, var)
@@ -580,7 +580,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": "Applying the chain rule, the final derivative is:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({outer_latex}) = {final_derivative_latex}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{outer_latex}] = {final_derivative_latex}"
         })
     elif expr_type in ["asin", "acos", "atan", "acsc", "asec", "acot"]:
         outer, inner = chain_extract_u_v(expr)
@@ -602,7 +602,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"This is an inverse trigonometric function $\\operatorname{{{outer.func.__name__}}}({str(var)})$. We'll differentiate using its standard rule ${rule}$:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}\\left({outer_latex}\\right)"
+            "math": f"\\frac{{d}}{{d{str(var)}}}\\left[{outer_latex}\\right] = \\text{{derivative of}}\\ {outer.func.__name__}({str(var)})\\ \\times\\ \\frac{{d}}{{d{str(var)}}}[{inner_latex}]"
         })
         step_number += 1
         inverse_trig_derivatives = {
@@ -617,7 +617,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"The derivative of $\\operatorname{{{outer.func.__name__}}}({str(var)})$ is ${outer_derivative_text}$.",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({outer_latex}) = {outer_derivative_text} \\times \\frac{{d}}{{d{str(var)}}}({inner_latex})"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{outer_latex}] = {outer_derivative_text} \\times \\frac{{d}}{{d{str(var)}}}[{inner_latex}]"
         })
         step_number += 1
         inner_derivative = calculate_derivative(inner, var)
@@ -627,14 +627,14 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": "Now, differentiate the inside function:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({inner_latex}) = {inner_derivative_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{inner_latex}] = {inner_derivative_latex}"
             })
             step_number += 1
         else:
             steps.append({
                 "number": step_number,
                 "text": "The derivative of the inside function is:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({inner_latex}) = {inner_derivative_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{inner_latex}] = {inner_derivative_latex}"
             })
             step_number += 1
         final_derivative = calculate_derivative(expr, var)
@@ -642,7 +642,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": "Using the chain rule, the final derivative is:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({outer_latex}) = {final_derivative_latex}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{outer_latex}] = {final_derivative_latex}"
         })
     elif expr_type == "log":
         outer, inner = chain_extract_u_v(expr)
@@ -651,13 +651,13 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"This is a natural logarithm function $\\ln(x)$. We'll use the rule $\\frac{{d}}{{dx}}[ln(x)] = \\frac{{1}}{{x}}$:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}\\left({outer_latex}\\right)"
+            "math": f"\\frac{{d}}{{d{str(var)}}}\\left[{outer_latex}\\right]"
         })
         step_number += 1
         steps.append({
             "number": step_number,
             "text": f"The derivative of $\\ln(x)$ is $\\frac{{1}}{{x}}$, so we apply the chain rule with the inside function:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({outer_latex}) = \\frac{{1}}{{{inner_latex}}} \\times \\frac{{d}}{{d{str(var)}}}({inner_latex})"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{outer_latex}] = \\frac{{1}}{{{inner_latex}}} \\times \\frac{{d}}{{d{str(var)}}}[{inner_latex}]"
         })
         step_number += 1
         inner_derivative = calculate_derivative(inner, var)
@@ -667,14 +667,14 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
             steps.append({
                 "number": step_number,
                 "text": "Now, find the derivative of the inside function:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({inner_latex}) = {inner_derivative_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{inner_latex}] = {inner_derivative_latex}"
             })
             step_number += 1
         else:
             steps.append({
                 "number": step_number,
                 "text": "The derivative of the inside function is:",
-                "math": f"\\frac{{d}}{{d{str(var)}}}({inner_latex}) = {inner_derivative_latex}"
+                "math": f"\\frac{{d}}{{d{str(var)}}}[{inner_latex}] = {inner_derivative_latex}"
             })
             step_number += 1
         final_derivative = calculate_derivative(expr, var)
@@ -682,7 +682,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": "Thus, the final derivative is:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({outer_latex}) = {final_derivative_latex}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{outer_latex}] = {final_derivative_latex}"
         })
     else:
         final_derivative = calculate_derivative(expr, var)
@@ -690,7 +690,7 @@ def generate_steps(expr, var, current_depth=0, max_depth=2):
         steps.append({
             "number": step_number,
             "text": f"Taking the derivative directly:",
-            "math": f"\\frac{{d}}{{d{str(var)}}}({expr_latex}) = {final_derivative_latex}"
+            "math": f"\\frac{{d}}{{d{str(var)}}}[{expr_latex}] = {final_derivative_latex}"
         })
     return steps
 
