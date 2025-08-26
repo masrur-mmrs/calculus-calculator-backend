@@ -9,7 +9,6 @@ def parse_and_evaluate_matrix_expression(expression):
     Parse and evaluate matrix expressions step by step to handle mixed types properly
     """
     try:
-        # Create a safe namespace
         safe_globals = {
             '__builtins__': {},
             'Matrix': Matrix,
